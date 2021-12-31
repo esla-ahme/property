@@ -14,7 +14,7 @@ const Filters = () => {
   const [locality, setLocality] = useState(null)
   const [added, setAdded] = useState(null)
   const [bathes, setBathes] = useState(null)
-  const [bedroms, setBedrooms] = useState(null)
+  const [bedrooms, setBedrooms] = useState(null)
 
   return (
     <div className="filters flex-col">
@@ -25,10 +25,11 @@ const Filters = () => {
       </div>
       <div className={`filters-list ${showFilters ? "show" : ""}`}>
         <ButtonGroup role="check" selected={locality} handleValue={setLocality} label="locality" options={["Cairo", "Giza", "Alex"]}></ButtonGroup>
-        <ButtonGroup role="radio" label="added" unit="weeks ago" options={[1, 2, 5]}></ButtonGroup>
-        <ButtonGroup role="radio" label="bedrooms" unit={"or more"} options={[2, 3, 4, 5]}></ButtonGroup>
-        <ButtonGroup role="radio" label="bathes" options={[1, 2, 3]} unit="or more"></ButtonGroup>
-        <div className="price">
+        <ButtonGroup role="radio" selected={added} handleValue={setAdded} label="added" unit="weeks ago" options={["1", "2", "5"]}></ButtonGroup>
+        <ButtonGroup role="radio" selected={bathes} handleValue={setBathes} label="bedrooms" unit={"or more"} options={["2", "3", "4", "5"]}></ButtonGroup>
+        <ButtonGroup role="radio" selected={bedrooms} handleValue={setBedrooms} label="bathes" options={["1", "2", "3"]} unit="or more"></ButtonGroup>
+        <p>{locality + " " + added + " " + bedrooms + " " + bathes}</p>
+        <div className="range">
           <div>Carbet area</div>
           <Range style={{ width: "240px" }} min={50} max={500}
             defaultValue={[50, 500]}
@@ -38,7 +39,7 @@ const Filters = () => {
             marks={{ 50: 50, 100: 100, 200: 200, 400: 400, 500: 500, 300: 300 }}
             allowCross={false} />
         </div>
-        <div className="price">
+        <div className="range">
           <div>Price range</div>
           <Range style={{ width: "240px" }} min={100} max={1000}
             dots step={100}

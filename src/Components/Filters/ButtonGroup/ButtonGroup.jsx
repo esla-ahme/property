@@ -2,22 +2,28 @@ import './buttonGroup.css'
 const ButtonGroup = ({ role, label, options, unit, selected, handleValue }) => {
 
   const radioHandler = (e) => {
-    const alreadySelected = e.target.classList.contains('selected')
-    const children = e.target.parentNode.children
-    for (let i = 0; i < children.length; i++) {
-      children[i].classList.remove('selected')
+    if (selected == null) {
+      //if no filter applied
+      handleValue(e.target.textContent)
+    } else {
+      //add to already existed filters (remove)
+      selected === e.target.textContent ? handleValue(null)
+        : handleValue(e.target.textContent)
     }
-    alreadySelected || e.target.classList.add('selected')
   }
   const checkHandler = (e) => {
-    if (selected === null) {
-      handleValue([e.target.value])
-      return
+    //handle button group as check boxes
+    if (selected == null) {
+      //if no filter applied
+      handleValue([e.target.textContent])
+    } else {
+      //add to already existed filters (remove)
+      const newSelected = selected
+      const index = newSelected?.indexOf(e.target.textContent)
+      index === -1 ? newSelected?.push(e.target.textContent)
+        : newSelected?.splice(index, 1)
+      handleValue([...newSelected])
     }
-    const newSelected = selected
-    const index = newSelected.indexOf(e.target.value)
-    index === -1 ? newSelected.push(e.target.value) : newSelected.splice(index, 1)
-    handleValue(newSelected)
   }
   return (
     <div className="btn-group flex">
@@ -26,12 +32,12 @@ const ButtonGroup = ({ role, label, options, unit, selected, handleValue }) => {
         {
           role === 'check' ?
             options.map(option =>
-              <button key={option} className={`option ${selected?.includes("option") ? "selected" : ""} `}
+              <button key={label + option} className={`option ${selected?.includes(option) ? "selected" : ""} `}
                 onClick={checkHandler}>
                 {option}</button>)
             :
             options.map(option =>
-              <button key={option} className={`option  ${selected && selected === "option" ? "selected" : ""}`}
+              <button key={label + option} className={`option  ${selected === option ? "selected" : ""}`}
                 onClick={radioHandler}>
                 {option}</button>)
         }</div>
