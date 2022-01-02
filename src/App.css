@@ -243,12 +243,19 @@ margin-left: auto;
   border: 1px  solid #ddd;
   padding: 1rem;
   max-width: 80vw;
+  text-align: center;
+
+}
+.recent-list p {
+  text-align: center;
+  padding: 1rem;
 }
 .recent-list{
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
   gap: 1rem;
+
 }
 
 .recent-list .property{
@@ -266,4 +273,14 @@ margin-left: auto;
   }
   .recent-list .prop-name{
     max-width: 150px;
+  }
+
+
+  .apply-btn{
+    border: none;
+    outline:none;
+    background-color: #001D3E;
+    color: #eee;
+    width: 70px;
+    padding: 0.5rem 1rem ;
   }

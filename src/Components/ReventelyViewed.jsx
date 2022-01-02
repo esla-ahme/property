@@ -14,7 +14,7 @@ function RecentelyViewed({ recentelyViewed, setRecentelyViewed, findProperty }) 
     <div className="recent">
       <h3>Recentel Viewed Properties     </h3>
       <div className="recent-list">
-        {lst.map(p => <Property k={p.id} property={p} recentelyViewed={recentelyViewed} setRecentelyViewed={setRecentelyViewed} />)}
+        {lst.length === 0 ? <p><br />you didn't open any Properties<br /></p> : lst.map(p => <Property k={p.id} property={p} recentelyViewed={recentelyViewed} setRecentelyViewed={setRecentelyViewed} />)}
       </div>
     </div>
 

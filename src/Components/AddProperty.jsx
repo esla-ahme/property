@@ -40,7 +40,7 @@ function AddProperty({ handleAddProperty, close }) {
       images,
       thumbnail: images[thumbnail],
       isFavorited: false,
-      viewes: 0
+      views: 0
     }
     handleAddProperty(property)
     close()
