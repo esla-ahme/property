@@ -3,7 +3,7 @@ import Property from './Components/Property';
 import ListofProp from './Components/ListofProp'
 import Filters from './Components/Filters/Filters';
 import AddProperty from './Components/AddProperty';
-
+import { AiFillPlusCircle } from 'react-icons/ai'
 import { nanoid } from 'nanoid'
 import { useState } from 'react'
 import 'react-responsive-modal/styles.css';
@@ -57,11 +57,11 @@ function App() {
         flag = false;
         continue;
       }
-      if (searchParameters.bedrooms && (Number(searchParameters.bedrooms) >= properties[i].bedrooms)) {
+      if (searchParameters.bedrooms && (Number(searchParameters.bedrooms) > properties[i].bedrooms)) {
         flag = false;
         continue;
       }
-      if (searchParameters.bathes && (Number(searchParameters.bathes) >= properties[i].bathes)) {
+      if (searchParameters.bathes && (Number(searchParameters.bathes) > properties[i].bathes)) {
         flag = false;
         continue;
       }
@@ -87,15 +87,20 @@ function App() {
   const [open, setOpen] = useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
   const handleAddProperty = (property) => {
     const newProperties = [property, ...properties]
+    console.log(property)
     setProperties(newProperties)
   }
   return (
     <div className="App">
 
-      <div className='flex'><Filters setSearchParameters={setSearchParameters} />
-        <button className="add" onClick={onOpenModal}>add property</button>
+      <div className='flex nav' >
+        <Filters setSearchParameters={setSearchParameters} />
+        <button className="add" onClick={onOpenModal}>
+          <AiFillPlusCircle size={"3rem"} />
+        </button>
       </div>
       <Modal open={open} onClose={onCloseModal} center>
         <h2>Add New Property</h2>

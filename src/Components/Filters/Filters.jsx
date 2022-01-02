@@ -33,10 +33,11 @@ const Filters = ({ setSearchParameters }) => {
   }
   return (
     <div className="filters flex-col">
-      <div className="flex">
+      <div className="flex bar">
         <SearchBar />
-        <button className="filters-btn w-icon" onClick={toggleFilters}><MdTune size="2rem" /><h4>Filters</h4></button>
-
+        <button className="filters-btn w-icon"
+          onClick={toggleFilters}><MdTune size="2rem" />
+        </button>
       </div>
       <div className={`filters-list ${showFilters ? "show" : ""}`}>
         <ButtonGroup role="check" selected={locality} handleValue={setLocality} label="locality" options={["Cairo", "Giza", "Alex"]}></ButtonGroup>
