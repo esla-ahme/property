@@ -1,13 +1,18 @@
-import './App.css';
-import Property from './Components/Property';
-import ListofProp from './Components/ListofProp'
-import Filters from './Components/Filters/Filters';
-import AddProperty from './Components/AddProperty';
-import { AiFillPlusCircle } from 'react-icons/ai'
 import { nanoid } from 'nanoid'
 import { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import './App.css';
 import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
+
+import HomePage from './Components/HomePage'
+import PropertyDetail from './Components/PropertyDetail';
+import RecentelyViewed from './Components/ReventelyViewed';
+
 function App() {
   //properties
   const [properties, setProperties] = useState([
@@ -18,7 +23,7 @@ function App() {
       bedrooms: 3,
       bathes: 2,
       carbetArea: 165,
-      viewes: 1854,
+      views: 1854,
       price: 205,
       isFavorited: false,
       date: "12/15/2021"
@@ -30,15 +35,27 @@ function App() {
       bedrooms: 5,
       bathes: 3,
       carbetArea: 205,
-      viewes: 854,
+      views: 854,
       price: 350,
       isFavorited: false,
       date: "11/01/2021"
     }
   ])
 
+  const findProperty = (id) => {
+
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].id === id) {
+
+        return properties[i]
+
+      }
+    }
+  }
+
   //Search parmeters
-  const [searchParameters, setSearchParameters] = useState({})
+  const [searchParameters, setSearchParameters] = useState([])
+
   function weeksBetween(d1, d2) {
     console.log(Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000)))
     return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
@@ -46,10 +63,9 @@ function App() {
 
   const filterProperties = (properties) => {
     const filteredList = []
-    console.log(searchParameters)
     for (let i = 0; i < properties.length; i++) {
       let flag = true;
-      if (searchParameters.locality && !searchParameters.locality.includes(properties[i].locality)) {
+      if (searchParameters.locality && (searchParameters.locality.length !== 0) && !searchParameters.locality.includes(properties[i].locality)) {
         flag = false;
         continue;
       }
@@ -83,33 +99,27 @@ function App() {
     return filteredList
   }
 
-  //add Propery
-  const [open, setOpen] = useState(false);
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
-
-  const handleAddProperty = (property) => {
-    const newProperties = [property, ...properties]
-    console.log(property)
-    setProperties(newProperties)
-  }
+  //recentel viewed 
+  const [recentelyViewed, setRecentelyViewed] = useState([])
+  console.log(recentelyViewed)
   return (
     <div className="App">
+      <Router>
+        <Routes>
 
-      <div className='flex nav' >
-        <Filters setSearchParameters={setSearchParameters} />
-        <button className="add" onClick={onOpenModal}>
-          <AiFillPlusCircle size={"3rem"} />
-        </button>
-      </div>
-      <Modal open={open} onClose={onCloseModal} center>
-        <h2>Add New Property</h2>
-        <AddProperty handleAddProperty={handleAddProperty} />
+          <Route path="/property/:id"
+            element={<PropertyDetail findProperty={findProperty} />} />
+          <Route path="/"
+            element={<HomePage
+              properties={properties} setProperties={setProperties}
+              filterProperties={filterProperties}
+              setSearchParameters={setSearchParameters}
+              recentelyViewed={recentelyViewed} setRecentelyViewed={setRecentelyViewed}
+            />} />
 
-      </Modal>
-      <ListofProp>
-        {filterProperties(properties).map(p => <Property k={p.id} property={p} />)}
-      </ListofProp>
+        </Routes>
+        <RecentelyViewed recentelyViewed={recentelyViewed} setRecentelyViewed={setRecentelyViewed} findProperty={findProperty} />
+      </Router>
     </div>
   );
 }

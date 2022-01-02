@@ -2,7 +2,9 @@ import { useState } from 'react'
 import ImageUploading from "react-images-uploading";
 import { BsTrash } from "react-icons/bs"
 import { FaThumbsUp } from "react-icons/fa"
-function AddProperty({ handleAddProperty }) {
+import { nanoid } from 'nanoid'
+
+function AddProperty({ handleAddProperty, close }) {
   const [locality, setLocality] = useState(null)
   const [name, setName] = useState(null)
   const [bedrooms, setBedrooms] = useState(null)
@@ -20,21 +22,28 @@ function AddProperty({ handleAddProperty }) {
     // data for submit
     setImages(imageList);
   };
-  const selectThumbnail = (index) => {
+  const selectThumbnail = (e, index) => {
+    e.preventDefault()
     setThumbnail(index)
   }
 
   const addProperty = (e) => {
     const property = {
+      id: nanoid(),
       name,
       locality,
       bedrooms,
       bathes,
       carbetArea,
       price,
-      date: new Date().toLocaleDateString()
+      date: new Date().toLocaleDateString(),
+      images,
+      thumbnail: images[thumbnail],
+      isFavorited: false,
+      viewes: 0
     }
     handleAddProperty(property)
+    close()
   }
   return (
 
@@ -68,7 +77,7 @@ function AddProperty({ handleAddProperty }) {
                 <img src={image.data_url} alt="" width="80" height="80" />
                 <div className="image-item-btns">
                   <button onClick={() => onImageRemove(index)}><BsTrash /></button>
-                  <button onClick={() => selectThumbnail(index)}><FaThumbsUp /></button>
+                  <button onClick={(e) => selectThumbnail(e, index)}><FaThumbsUp /></button>
                 </div>
               </div>
             ))}</div>

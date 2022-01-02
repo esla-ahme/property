@@ -1,5 +1,9 @@
+a{text-decoration: none;
+color: inherit;}
 .App{
-  padding:1rem
+  padding:1rem;
+  display: grid;
+  place-items: center;
 }
 .flex {
   display: flex;
@@ -86,8 +90,11 @@
   justify-content: space-between;
   gap:0.25rem;
   overflow: hidden;
+  flex-grow: 1;
  
 }
+
+
 
 .filters-btn{
    outline: none;
@@ -97,6 +104,7 @@
    color: white;
   border-radius:  0 2rem 2rem 0;
   cursor: pointer;
+  
 }
 .filters-btn:hover{
    background-color: #000D2E;
@@ -208,3 +216,54 @@ margin-left: auto;
   
   background-color: #ddd;
 }
+.nav{justify-content:space-between }
+
+
+/*Propert details*/
+.prop-detail{
+ 
+  
+  text-align:center;
+  font-size: 18px;
+}
+.prop-detail .w-icon{
+  width: fit-content;
+ 
+  justify-content: center;
+}
+.prop-img-slider{
+  width: 300px;
+  height:300px;
+  object-fit:cover;
+  border:2px solid #eee
+
+}
+
+.recent{
+  border: 1px  solid #ddd;
+  padding: 1rem;
+  max-width: 80vw;
+}
+.recent-list{
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 1rem;
+}
+
+.recent-list .property{
+  flex-direction: column;
+  font-size: 14px;
+  width: fit-content;
+
+}
+.recent-list .prop-details{
+  gap:0.5rem
+}
+.recent-list .property .prop-img{
+    width:200px;
+    height:200px;
+  }
+  .recent-list .prop-name{
+    max-width: 150px;
+  }
